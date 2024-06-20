@@ -11,6 +11,7 @@ leafwing-input-manager = "0.13.3"
 bevy_xpbd_3d = { git = "https://github.com/Jondolf/bevy_xpbd", branch = "main", features = [
     "simd",
 ] }
+itertools = "0.13.0"
 
 [dependencies.bevy]
 version = "0.13.2"

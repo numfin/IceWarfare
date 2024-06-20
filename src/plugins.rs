@@ -1,7 +1,6 @@
 pub mod bot;
 pub mod camera;
 pub mod controls;
-pub mod cursor;
 pub mod earth;
 pub mod health;
 pub mod init;

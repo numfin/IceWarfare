@@ -1,24 +1,15 @@
 use bevy::prelude::*;
 use bevy_xpbd_3d::prelude::*;
-use leafwing_input_manager::prelude::*;
 
 use crate::plugins::health::{Health, HealthBundle, HealthRelation};
 
-use super::{Player, PlayerAction, PlayerTargetRelation};
+use super::{Player, PlayerTargetRelation};
 
 pub fn spawn_player(
     mut commands: Commands,
     mut meshes: ResMut<Assets<Mesh>>,
     mut materials: ResMut<Assets<StandardMaterial>>,
 ) {
-    let input_map = InputMap::new([
-        (PlayerAction::SetTarget, InputKind::Mouse(MouseButton::Left)),
-        (PlayerAction::Run, KeyCode::KeyW.into()),
-        (PlayerAction::Stop, KeyCode::KeyS.into()),
-        (PlayerAction::RotateLeft, KeyCode::KeyA.into()),
-        (PlayerAction::RotateRight, KeyCode::KeyD.into()),
-    ]);
-
     let health = commands
         .spawn(HealthBundle {
             health: Health::new(1000),
@@ -37,7 +28,6 @@ pub fn spawn_player(
     commands
         .spawn((
             Name::new("Player"),
-            InputManagerBundle::with_map(input_map),
             Player,
             HealthRelation { health },
             PlayerTargetRelation { target: None },

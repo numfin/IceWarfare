@@ -1,14 +1,14 @@
 use bevy::prelude::*;
 
 use crate::plugins::health::{Health, HealthRelation};
-use crate::plugins::physics::crash_into_smth::CrashEvent;
+use crate::plugins::physics::collision::EventCollisionOfTwo;
 
-pub fn react_to_crash(
-    mut ev_crash: EventReader<CrashEvent>,
+pub fn system_collide_with_moving_object(
+    mut ev_crash: EventReader<EventCollisionOfTwo>,
     players: Query<&HealthRelation>,
     mut healths: Query<&mut Health>,
 ) {
-    for CrashEvent { a, b } in ev_crash.read() {
+    for EventCollisionOfTwo { a, b } in ev_crash.read() {
         let impact_force = a.1.distance(b.1 .0);
 
         let Ok(a_health) = players.get(a.0) else {

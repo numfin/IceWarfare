@@ -6,7 +6,7 @@ use crate::plugins::target::Target;
 
 use super::PlayerTargetRelation;
 
-pub fn move_player(
+pub fn system_move_towards_target(
     mut commands: Commands,
     mut players: Query<(
         &mut Transform,

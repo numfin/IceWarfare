@@ -2,7 +2,7 @@ use bevy::prelude::*;
 
 use crate::plugins::player::Player;
 
-pub fn camera_follow_player(
+pub fn system_camera_above_player(
     mut cameras: Query<&mut Transform, With<Camera3d>>,
     players: Query<&mut Transform, (With<Player>, Without<Camera3d>)>,
 ) {
