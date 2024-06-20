@@ -3,7 +3,7 @@ use bevy_xpbd_3d::prelude::*;
 
 use crate::plugins::health::{Health, HealthBundle, HealthRelation};
 
-use super::{Player, PlayerTargetRelation};
+use super::components::{Acceleration, Player, PlayerTarget};
 
 pub fn spawn_player(
     mut commands: Commands,
@@ -30,7 +30,8 @@ pub fn spawn_player(
             Name::new("Player"),
             Player,
             HealthRelation { health },
-            PlayerTargetRelation { target: None },
+            Acceleration(0.0),
+            PlayerTarget(None),
             PbrBundle {
                 mesh: meshes.add(Cuboid::new(0.5, 1.6, 0.5)),
                 material: materials.add(StandardMaterial {

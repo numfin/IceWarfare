@@ -6,4 +6,3 @@ pub mod health;
 pub mod init;
 pub mod physics;
 pub mod player;
-pub mod target;

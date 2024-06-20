@@ -1,5 +1,5 @@
 use bevy::prelude::*;
-use bevy_xpbd_3d::components::RigidBody;
+use bevy_xpbd_3d::components::{CoefficientCombine, Restitution, RigidBody};
 use bevy_xpbd_3d::plugins::collision::Collider;
 
 static EARTH_SIZE: f32 = 100.0;
@@ -111,5 +111,9 @@ fn create_wall(
                 ..default()
             },
         ))
-        .insert((RigidBody::Static, Collider::cuboid(x, wall_h, z)));
+        .insert((
+            RigidBody::Static,
+            Collider::cuboid(x, wall_h, z),
+            Restitution::new(0.1).with_combine_rule(CoefficientCombine::Multiply),
+        ));
 }

@@ -1,4 +1,5 @@
 mod camera;
+mod components;
 mod crash;
 mod movement;
 mod spawn;
@@ -8,26 +9,10 @@ use bevy::prelude::*;
 use bevy::transform::TransformSystem;
 use bevy_xpbd_3d::{PhysicsSchedule, PhysicsSet, PhysicsStepSet};
 use camera::system_camera_above_player;
-use leafwing_input_manager::Actionlike;
+use components::PlayerAction;
 use spawn::spawn_player;
 
 use super::controls::ControlPlugin;
-
-#[derive(Component)]
-pub struct Player;
-
-#[derive(Component)]
-pub struct PlayerTargetRelation {
-    pub target: Option<Entity>,
-}
-
-#[derive(Actionlike, PartialEq, Eq, Hash, Clone, Copy, Debug, Reflect)]
-enum PlayerAction {
-    Run,
-    Stop,
-    RotateLeft,
-    RotateRight,
-}
 
 pub struct PlayerPlugin;
 impl Plugin for PlayerPlugin {
@@ -36,6 +21,8 @@ impl Plugin for PlayerPlugin {
             .add_systems(Startup, spawn_player)
             .add_systems(Update, target::system_set_player_target)
             .add_systems(Update, crash::system_collide_with_moving_object)
+            .add_systems(Update, movement::system_accelerate_over_time)
+            .add_systems(Update, movement::system_stop_moving_when_reached_target)
             .add_systems(
                 PhysicsSchedule,
                 movement::system_move_towards_target.before(PhysicsStepSet::BroadPhase),

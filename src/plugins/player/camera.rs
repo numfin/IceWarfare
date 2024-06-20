@@ -1,6 +1,6 @@
 use bevy::prelude::*;
 
-use crate::plugins::player::Player;
+use super::components::Player;
 
 pub fn system_camera_above_player(
     mut cameras: Query<&mut Transform, With<Camera3d>>,
