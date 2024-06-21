@@ -4,7 +4,7 @@ use bevy_xpbd_3d::plugins::collision::Collider;
 
 static EARTH_SIZE: f32 = 100.0;
 
-pub fn spawn_earth(
+pub fn system_spawn_bounds(
     mut commands: Commands,
     mut meshes: ResMut<Assets<Mesh>>,
     mut materials: ResMut<Assets<StandardMaterial>>,
@@ -89,6 +89,10 @@ fn create_ground(
         ))
         .insert((RigidBody::Static, Collider::cuboid(size, 1.0, size)));
 }
+
+#[derive(Component)]
+pub struct Wall;
+
 fn create_wall(
     name: &'static str,
     (x, z): (f32, f32),
@@ -110,6 +114,7 @@ fn create_wall(
                 transform: Transform::from_translation(Vec3::new(dx, 0.0, dz)),
                 ..default()
             },
+            Wall,
         ))
         .insert((
             RigidBody::Static,

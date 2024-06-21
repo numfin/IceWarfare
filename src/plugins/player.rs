@@ -21,8 +21,10 @@ impl Plugin for PlayerPlugin {
             .add_systems(Startup, spawn_player)
             .add_systems(Update, target::system_set_player_target)
             .add_systems(Update, crash::system_collide_with_moving_object)
+            .add_systems(Update, crash::system_collide_with_wall)
             .add_systems(Update, movement::system_accelerate_over_time)
             .add_systems(Update, movement::system_stop_moving_when_reached_target)
+            .add_systems(Update, movement::system_stop_after_wall_hit)
             .add_systems(
                 PhysicsSchedule,
                 movement::system_move_towards_target.before(PhysicsStepSet::BroadPhase),

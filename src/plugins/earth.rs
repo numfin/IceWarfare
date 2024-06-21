@@ -1,11 +1,10 @@
-pub mod spawn_earth;
+pub mod spawn;
 
 use bevy::prelude::*;
-use spawn_earth::spawn_earth;
 
 pub struct EarthPlugin;
 impl Plugin for EarthPlugin {
     fn build(&self, app: &mut App) {
-        app.add_systems(Startup, spawn_earth);
+        app.add_systems(Startup, spawn::system_spawn_bounds);
     }
 }

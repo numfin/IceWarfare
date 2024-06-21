@@ -48,7 +48,7 @@ pub fn spawn_player(
                 .lock_rotation_x()
                 .lock_rotation_z()
                 .lock_translation_y(),
-            LinearDamping(1.0),
+            LinearDamping(0.3),
             AngularDamping(10.0),
         ));
 }
