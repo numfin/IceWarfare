@@ -1,6 +1,10 @@
 [config]
-skip_core_tasks = true
+    skip_core_tasks = true
 
 [tasks.dev]
-script = "cargo run"
-watch.watch = ["src"]
+    script      = "cargo clippy"
+    watch.watch = ["src"]
+
+[tasks.run]
+    script      = "cargo run"
+    watch.watch = ["src"]

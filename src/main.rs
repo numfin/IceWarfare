@@ -1,24 +1,26 @@
-mod plugins;
-
+mod camera;
+mod character;
+mod controls;
+mod earth;
+mod health;
+mod init;
+mod interactions;
+mod movement;
+mod physics;
 use bevy::prelude::*;
-use plugins::bot::BotPlugin;
-use plugins::camera::GameCameraPlugin;
-use plugins::earth::EarthPlugin;
-use plugins::health::HealthPlugin;
-use plugins::init::AppInitPlugin;
-use plugins::physics::PhysicsPlugin;
-use plugins::player::PlayerPlugin;
 
 fn main() {
     App::new()
-        .add_plugins(AppInitPlugin { debug: true })
+        .add_plugins(init::AppInitPlugin { debug: false })
         .add_plugins((
-            GameCameraPlugin,
-            EarthPlugin,
-            PlayerPlugin,
-            BotPlugin,
-            HealthPlugin,
-            PhysicsPlugin,
+            controls::ControlPlugin,
+            movement::MovementPlugin,
+            physics::PhysicsPlugin,
+            character::CharacterPlugin,
+            camera::GameCameraPlugin,
+            earth::EarthPlugin,
+            health::HealthPlugin,
+            interactions::InteractionPlugin,
         ))
         .run();
 }
