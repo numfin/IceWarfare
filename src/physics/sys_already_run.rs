@@ -1,17 +1,32 @@
+use std::marker::PhantomData;
+
 use bevy::prelude::*;
 
-#[derive(Resource, Default)]
-pub struct AlreadyRunFlags {
-    pub handle_moving_hit: bool,
-    pub handle_wall_hit: bool,
+#[derive(Resource)]
+pub struct AlreadyRun<T: 'static> {
+    flag: bool,
+    _f: PhantomData<T>,
 }
-impl AlreadyRunFlags {
+impl<T: 'static> AlreadyRun<T> {
+    pub fn is_triggered(&self) -> bool {
+        self.flag
+    }
     pub fn reset(&mut self) {
-        self.handle_moving_hit = false;
-        self.handle_wall_hit = false;
+        self.flag = false;
+    }
+    pub fn trigger(&mut self) {
+        self.flag = true;
+    }
+}
+impl<T> Default for AlreadyRun<T> {
+    fn default() -> Self {
+        Self {
+            flag: false,
+            _f: PhantomData,
+        }
     }
 }
 
-pub fn system(mut r: ResMut<AlreadyRunFlags>) {
+pub fn system<T: Send + Sync>(mut r: ResMut<AlreadyRun<T>>) {
     r.reset();
 }

@@ -7,8 +7,6 @@ use bevy::render::RenderPlugin;
 pub struct AppInitPlugin {
     pub debug: bool,
 }
-#[derive(Resource)]
-pub struct EnableGizmoDebug;
 
 impl Plugin for AppInitPlugin {
     fn build(&self, app: &mut App) {
@@ -25,7 +23,6 @@ impl Plugin for AppInitPlugin {
                 global: true,
                 default_color: Color::WHITE.into(),
             })
-            .insert_resource(EnableGizmoDebug)
             .add_plugins(PhysicsDebugPlugin::default());
         }
         app.add_plugins(default_plugins)

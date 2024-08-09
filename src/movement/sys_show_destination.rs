@@ -1,8 +1,6 @@
 use bevy::color::palettes::tailwind;
 use bevy::prelude::*;
 
-use crate::init::EnableGizmoDebug;
-
 use super::MoveTarget;
 
 pub fn system(players: Query<(&Transform, &MoveTarget)>, mut gizmos: Gizmos) {

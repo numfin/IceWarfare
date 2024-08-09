@@ -2,7 +2,7 @@ use avian3d::prelude::*;
 use bevy::prelude::*;
 use tiny_bail::cq;
 
-use super::sys_already_run::AlreadyRunFlags;
+use super::sys_already_run::AlreadyRun;
 
 #[derive(Event)]
 pub struct EventMovingHitMoving {
@@ -10,13 +10,13 @@ pub struct EventMovingHitMoving {
     pub b: (Entity, LinearVelocity),
 }
 
-pub fn observer(
+pub fn system(
     collisions: Res<Collisions>,
-    mut already_run: ResMut<AlreadyRunFlags>,
+    mut already_run: ResMut<AlreadyRun<EventMovingHitMoving>>,
     mut ev_crash: EventWriter<EventMovingHitMoving>,
     bodies: Query<&LinearVelocity>,
 ) {
-    if already_run.handle_moving_hit {
+    if already_run.is_triggered() {
         return;
     };
 
@@ -27,7 +27,7 @@ pub fn observer(
         }
 
         let (a_velocity, b_velocity) = (cq!(bodies.get(*a)), cq!(bodies.get(*b)));
-        already_run.handle_moving_hit = true;
+        already_run.trigger();
 
         ev_crash.send(EventMovingHitMoving {
             a: (*a, *a_velocity),

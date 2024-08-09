@@ -3,6 +3,9 @@ use bevy::prelude::*;
 
 use super::{Health, HealthReference};
 
+#[derive(Component)]
+pub struct HealthModel;
+
 pub fn system(
     mut commands: Commands,
     mut meshes: ResMut<Assets<Mesh>>,
@@ -20,6 +23,7 @@ pub fn system(
                 transform: Transform::from_translation(Vec3::new(0.0, 1.5, 0.0)),
                 ..default()
             })
+            .insert(HealthModel)
             .id();
         commands
             .entity(entity)

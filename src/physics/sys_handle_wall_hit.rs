@@ -3,22 +3,23 @@ use bevy::prelude::*;
 
 use crate::earth::spawn::Wall;
 
-use super::sys_already_run::AlreadyRunFlags;
+use super::sys_already_run::AlreadyRun;
 
 #[derive(Event)]
 pub struct EventHitWall {
-    pub entity: Entity,
-    pub velocity: LinearVelocity,
+    pub body_id: Entity,
+    pub wall_id: Entity,
+    pub body_velocity: LinearVelocity,
 }
 
-pub fn observer(
+pub fn system(
     collisions: Res<Collisions>,
-    mut already_run: ResMut<AlreadyRunFlags>,
-    mut ev_crash: EventWriter<EventHitWall>,
+    mut already_run: ResMut<AlreadyRun<EventHitWall>>,
+    mut ev_hit_wall: EventWriter<EventHitWall>,
     bodies: Query<&LinearVelocity>,
     walls: Query<&Wall>,
 ) {
-    if already_run.handle_wall_hit {
+    if already_run.is_triggered() {
         return;
     };
 
@@ -27,14 +28,20 @@ pub fn observer(
         if !is_first_occurence {
             continue;
         }
-        let (velocity, entity) =
+
+        let (body_velocity, body_id, wall_id) =
             match (bodies.get(*a), walls.get(*b), walls.get(*a), bodies.get(*b)) {
-                (Ok(a_body), Ok(_), ..) => (*a_body, *a),
-                (.., Ok(_), Ok(b_body)) => (*b_body, *b),
+                (Ok(a_body), Ok(_b_wall), ..) => (*a_body, *a, *b),
+                (.., Ok(_a_wall), Ok(b_body)) => (*b_body, *b, *a),
                 _ => continue,
             };
-        already_run.handle_wall_hit = true;
 
-        ev_crash.send(EventHitWall { entity, velocity });
+        already_run.trigger();
+
+        ev_hit_wall.send(EventHitWall {
+            body_id,
+            wall_id,
+            body_velocity,
+        });
     }
 }
