@@ -1,38 +1,39 @@
 [workspace]
-    resolver = "2"
+resolver = "2"
 
 [package]
-    name    = "IceWarfare"
-    version = "0.1.0"
-    edition = "2021"
+name = "IceWarfare"
+version = "0.1.0"
+edition = "2021"
 
 [dependencies]
-    leafwing-input-manager = "0.14.0"
-    avian3d = { git = "https://github.com/Jondolf/avian", branch = "main", features = [
-        "simd",
-    ] }
+leafwing-input-manager = "0.14.0"
+avian3d = { git = "https://github.com/Jondolf/avian", branch = "main", features = [
+    "simd",
+] }
+blake3 = { version = "1.5", features = ["pure"] }
 
-    itertools = "0.13.0"
-    strum     = { version = "0.26.3", features = ["derive", "strum_macros"] }
-    eyre      = "0.6.12"
-    tiny_bail = "0.1.2"
+itertools = "0.13.0"
+strum = { version = "0.26.3", features = ["derive", "strum_macros"] }
+eyre = "0.6.12"
+tiny_bail = "0.1.2"
 
-    [dependencies.bevy]
-        version = "0.14.1"
-        features = [
-            # "dynamic_linking",
-            "wayland",
-            "file_watcher",
-            "webp",
-            "asset_processor",
-            "jpeg",
-        ]
+[dependencies.bevy]
+version = "0.14.1"
+features = [
+    # "dynamic_linking",
+    "x11",
+    "file_watcher",
+    "webp",
+    "asset_processor",
+    "jpeg",
+]
 
 
 [profile.dev]
-    opt-level = 1
-    [profile.dev.package."*"]
-        opt-level = 3
+opt-level = 1
+[profile.dev.package."*"]
+opt-level = 3
 
 [lints.rust]
-    irrefutable_let_patterns = "allow"
+irrefutable_let_patterns = "allow"

@@ -1,10 +1,22 @@
 [config]
-    skip_core_tasks = true
+skip_core_tasks = true
 
 [tasks.dev]
-    script      = "cargo clippy"
-    watch.watch = ["src"]
+script = "cargo clippy"
+watch.watch = ["src"]
 
 [tasks.run]
-    script      = "cargo run"
-    watch.watch = ["src"]
+script = "cargo run"
+watch.watch = ["src"]
+
+[tasks.build-win]
+script = "cargo build --target=x86_64-pc-windows-gnu --release"
+watch.watch = ["src"]
+
+[tasks.copy-assets]
+script = "cp assets target/x86_64-pc-windows-gnu/release/assets -r"
+watch.watch = ["assets"]
+
+[tasks.dev-win]
+run_task.name = ["copy-assets", "build-win"]
+run_task.parallel = true
