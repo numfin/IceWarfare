@@ -6,22 +6,22 @@ use crate::character::sys_animate_character::AnimationKind;
 use crate::character::sys_spawn_character::EventSpawnCharacter;
 
 #[derive(Component)]
-pub struct SkinBrax {
+pub struct SkinMan {
     pub is_controllable: bool,
     pub health: u16,
     pub player_position: Vec3,
 }
-impl SkinBrax {
+impl SkinMan {
     pub fn create_spawner(self) -> impl FnMut(Commands) {
         let asset_run = "brax/brax_running.glb";
 
         move |mut cmd: Commands| {
             use AnimationKind::*;
-            use GltfAssetLabel::Animation;
+            use GltfAssetLabel as GLabel;
             let model_animations = HashMap::from([
-                (Idle, Animation(1).from_asset(asset_run)),
-                (Walking, Animation(0).from_asset(asset_run)),
-                (Running, Animation(0).from_asset(asset_run)),
+                (Idle, GLabel::Animation(1).from_asset(asset_run)),
+                (Walking, GLabel::Animation(0).from_asset(asset_run)),
+                (Running, GLabel::Animation(0).from_asset(asset_run)),
             ]);
             cmd.trigger(EventSpawnCharacter {
                 health: self.health,

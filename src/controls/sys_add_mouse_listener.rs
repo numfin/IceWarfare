@@ -7,10 +7,7 @@ pub enum ActionMouse {
 }
 
 pub fn system(mut commands: Commands) {
-    let input_map = InputMap::new([
-        (ActionMouse::Click, InputKind::Mouse(MouseButton::Left)),
-        // ,
-    ]);
+    let input_map = InputMap::new([(ActionMouse::Click, MouseButton::Left)]);
 
-    commands.spawn(InputManagerBundle::with_map(input_map));
+    commands.spawn(input_map);
 }

@@ -1,22 +1,27 @@
 [config]
 skip_core_tasks = true
 
+[tasks.anim]
+script = "cargo run --bin anim"
+watch.watch = [ "src" ]
+
 [tasks.dev]
-script = "cargo clippy"
-watch.watch = ["src"]
+script = "cargo run --bin ice_warfare"
+watch.watch = [ "src" ]
 
 [tasks.run]
 script = "cargo run"
-watch.watch = ["src"]
+watch.watch = [ "src" ]
+env = { RUST_LOG = "info,wgpu_hal=off,ice_warfare=debug" }
 
 [tasks.build-win]
 script = "cargo build --target=x86_64-pc-windows-gnu --release"
-watch.watch = ["src"]
+watch.watch = [ "src" ]
 
 [tasks.copy-assets]
 script = "cp assets target/x86_64-pc-windows-gnu/release/assets -r"
-watch.watch = ["assets"]
+watch.watch = [ "assets" ]
 
 [tasks.dev-win]
-run_task.name = ["copy-assets", "build-win"]
+run_task.name = [ "copy-assets", "build-win" ]
 run_task.parallel = true

@@ -76,14 +76,11 @@ fn create_ground(
         .spawn((
             Name::new(name),
             Ground,
-            PbrBundle {
-                mesh: meshes.add(Cuboid::new(EARTH_SIZE, 1.0, EARTH_SIZE)),
-                material: materials.add(StandardMaterial {
-                    base_color: Color::WHITE,
-                    ..default()
-                }),
+            Mesh3d(meshes.add(Cuboid::new(EARTH_SIZE, 1.0, EARTH_SIZE))),
+            MeshMaterial3d(materials.add(StandardMaterial {
+                base_color: Oklcha::new(0.7, 0.17, 240.0, 1.0).into(),
                 ..default()
-            },
+            })),
         ))
         .insert((RigidBody::Static, Collider::cuboid(size, 1.0, size)));
 }
@@ -103,15 +100,13 @@ fn create_wall(
     commands
         .spawn((
             Name::new(name),
-            PbrBundle {
-                mesh: meshes.add(Cuboid::new(x, wall_h, z)),
-                material: materials.add(StandardMaterial {
-                    base_color: Color::WHITE,
-                    ..default()
-                }),
-                transform: Transform::from_translation(Vec3::new(dx, 0.0, dz)),
+            Mesh3d(meshes.add(Cuboid::new(x, wall_h, z))),
+            MeshMaterial3d(materials.add(StandardMaterial {
+                base_color: Color::WHITE,
+                perceptual_roughness: 1.0,
                 ..default()
-            },
+            })),
+            Transform::from_translation(Vec3::new(dx, 0.0, dz)),
             Wall,
         ))
         .insert((

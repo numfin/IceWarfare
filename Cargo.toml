@@ -1,34 +1,38 @@
 [workspace]
-resolver = "2"
+resolver = "3"
 
 [package]
-name = "IceWarfare"
+name = "ice_warfare"
 version = "0.1.0"
-edition = "2021"
+edition = "2024"
 
 [dependencies]
-leafwing-input-manager = "0.14.0"
-avian3d = { git = "https://github.com/Jondolf/avian", branch = "main", features = [
+leafwing-input-manager = "0.20.0"
+avian3d = { git = "https://github.com/Jondolf/avian", branch = "bevy-0.18", features = [
     "simd",
 ] }
-blake3 = { version = "1.5", features = ["pure"] }
 
-itertools = "0.13.0"
-strum = { version = "0.26.3", features = ["derive", "strum_macros"] }
+itertools = "0.14.0"
+strum = { version = "0.27.2", features = [ "derive", "strum_macros" ] }
 eyre = "0.6.12"
-tiny_bail = "0.1.2"
+tiny_bail = "0.7.0"
 
 [dependencies.bevy]
-version = "0.14.1"
+default-features = false
+version = "0.18"
 features = [
-    # "dynamic_linking",
-    "x11",
-    "file_watcher",
-    "webp",
-    "asset_processor",
-    "jpeg",
+    "dynamic_linking",
+    "wayland",
+    "3d",
+    "bevy_pbr",
+    # "file_watcher",
+    # "asset_processor",
+    # "webp",
+    # "jpeg",
+    "bevy_dev_tools",
+    "bevy_remote",
+    # "bevy_solari",
 ]
-
 
 [profile.dev]
 opt-level = 1

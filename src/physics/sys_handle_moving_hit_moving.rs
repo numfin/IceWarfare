@@ -4,8 +4,9 @@ use tiny_bail::cq;
 
 use super::sys_already_run::AlreadyRun;
 
-#[derive(Event)]
+#[derive(EntityEvent)]
 pub struct EventMovingHitMoving {
+    pub entity: Entity,
     pub a: (Entity, LinearVelocity),
     pub b: (Entity, LinearVelocity),
 }
@@ -13,7 +14,6 @@ pub struct EventMovingHitMoving {
 pub fn system(
     collisions: Res<Collisions>,
     mut already_run: ResMut<AlreadyRun<EventMovingHitMoving>>,
-    mut ev_crash: EventWriter<EventMovingHitMoving>,
     bodies: Query<&LinearVelocity>,
 ) {
     if already_run.is_triggered() {

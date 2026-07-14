@@ -1,14 +1,16 @@
 use bevy::prelude::*;
-use tiny_bail::cq;
+use tiny_bail::prelude::cq;
 
-use super::sys_spawn_character::CharacterModel;
+use crate::character::{skins::SkinOfCharacter, sys_spawn_character::CharacterModel};
 
 pub fn system(
-    players: Query<(&CharacterModel, &Transform)>,
-    mut models: Query<&mut Transform, (With<Handle<Scene>>, Without<CharacterModel>)>,
+    playable_characters: Query<(&CharacterModel, &Transform)>,
+    mut player_skins: Query<&mut Transform, (With<SkinOfCharacter>, Without<CharacterModel>)>,
 ) {
-    for (char_model, player_t) in &players {
-        let mut model_t = cq!(models.get_mut(char_model.0));
-        model_t.translation = player_t.translation;
+    for (char_model, player_t) in &playable_characters {
+        let player_skin_t = player_skins.get_mut(char_model.skin_entity());
+        let mut player_skin_t = cq!(player_skin_t);
+        player_skin_t.translation.x = player_t.translation.x;
+        player_skin_t.translation.z = player_t.translation.z;
     }
 }

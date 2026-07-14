@@ -2,9 +2,9 @@ mod camera;
 mod character;
 mod controls;
 mod earth;
-mod health;
+// mod health;
 mod init;
-mod interactions;
+// mod interactions;
 mod movement;
 mod physics;
 use bevy::prelude::*;
@@ -19,8 +19,8 @@ fn main() {
             character::CharacterPlugin,
             camera::GameCameraPlugin,
             earth::EarthPlugin,
-            health::HealthPlugin,
-            interactions::InteractionPlugin,
+            // health::HealthPlugin,
+            // interactions::InteractionPlugin,
         ))
         .run();
 }

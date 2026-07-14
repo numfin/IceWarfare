@@ -14,7 +14,7 @@ impl Plugin for MovementPlugin {
             .add_systems(Update, sys_set_move_target::system)
             .add_systems(
                 PhysicsSchedule,
-                sys_move_towards_target::system.before(PhysicsStepSet::First),
+                sys_move_towards_target::system.before(PhysicsStepSystems::First),
             );
     }
 }
